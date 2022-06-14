@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Middleware\TemplateDefaultsMiddleware;
+use Laminas\Mail\Transport\TransportInterface;
+use Laminas\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
+use App\EmailTransportFactory;
+use App\Service\Email\UserNotificationService;
+use App\Service\Email\UserNotificationServiceFactory;
+use App\Middleware\UrlBuilderMiddleware;
+use App\Middleware\UrlBuilderMiddlewareFactory;
+
 /**
  * The configuration provider for the App module
  *
@@ -36,6 +45,7 @@ class ConfigProvider
             ],
             'factories'  => [
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
+                TemplateDefaultsMiddleware::class => ReflectionBasedAbstractFactory::class,
             ],
         ];
     }
