@@ -5,18 +5,17 @@ FROM php:${PHP_VERSION}-fpm-${FPM_VERSION} as base
 
 FROM base as core
 
-ARG ENV
-
-RUN apk --update-cache add autoconf git libzip-dev gcc musl-dev make libzip-dev \
+RUN apk --update-cache add autoconf git libzip-dev gcc musl-dev make libzip-dev sqlite \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-install zip \
     && rm -rf /var/lib/apt/lists/*
 
-FROM base as staging
-
 WORKDIR /var/www/html
 
-COPY . .
+# Install sqlite3 so that the database can be generated
+RUN docker/php/scripts/create-database.sh
 
 COPY --from=composer:2.2.7 /usr/bin/composer /usr/bin/
+
+COPY . .

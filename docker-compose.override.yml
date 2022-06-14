@@ -14,9 +14,6 @@ services:
     build:
       context: ./
       dockerfile: docker/php/Dockerfile
-      target: core
-      args:
-        ENV: development
     restart: unless-stopped
     volumes:
       - .:/var/www/html
