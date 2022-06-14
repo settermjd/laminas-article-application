@@ -46,6 +46,7 @@ class ConfigProvider
             'factories'  => [
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
                 TemplateDefaultsMiddleware::class => ReflectionBasedAbstractFactory::class,
+                TransportInterface::class => EmailTransportFactory::class,
             ],
         ];
     }
